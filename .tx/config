@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[matilda.qt-translation-021x]
+file_filter = src/qt/locale/matilda_<lang>.ts
+source_file = src/qt/locale/matilda_en.ts
+source_lang = en

@@ -1,0 +1,33 @@
+# /etc/conf.d/matildad: config file for /etc/init.d/matildad
+
+# Config file location
+#MATILDAD_CONFIGFILE="/etc/matilda/matilda.conf"
+
+# What directory to write pidfile to?  (created and owned by $MATILDAD_USER)
+#MATILDAD_PIDDIR="/var/run/matildad"
+
+# What filename to give the pidfile
+#MATILDAD_PIDFILE="${MATILDAD_PIDDIR}/matildad.pid"
+
+# Where to write matildad data (be mindful that the blockchain is large)
+#MATILDAD_DATADIR="/var/lib/matildad"
+
+# User and group to own matildad process
+#MATILDAD_USER="matilda"
+#MATILDAD_GROUP="matilda"
+
+# Path to matildad executable
+#MATILDAD_BIN="/usr/bin/matildad"
+
+# Nice value to run matildad under
+#MATILDAD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#MATILDAD_OPTS=""
+
+# The timeout in seconds OpenRC will wait for matildad to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+MATILDAD_SIGTERM_TIMEOUT=600
