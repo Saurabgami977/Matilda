@@ -117,9 +117,9 @@ The effective TCP keepalive values are managed through the underlying
 operating system configuration and must be configured prior to connection establishment.
 
 For example, when running on GNU/Linux, one might use the following
-to lower the keepalive setting to 10 minutes:
+to lower the keepalive setting to 1 minutes:
 
-sudo sysctl -w net.ipv4.tcp_keepalive_time=600
+sudo sysctl -w net.ipv4.tcp_keepalive_time=60
 
 Setting the keepalive values appropriately for your operating environment may
 improve connectivity in situations where long-lived connections are silently

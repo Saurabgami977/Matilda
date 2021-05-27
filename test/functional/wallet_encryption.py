@@ -76,10 +76,10 @@ class WalletEncryptionTest(MatildaTestFramework):
 
         self.log.info('Check a timeout less than the limit')
         MAX_VALUE = 100000000
-        expected_time = int(time.time()) + MAX_VALUE - 600
-        self.nodes[0].walletpassphrase(passphrase2, MAX_VALUE - 600)
+        expected_time = int(time.time()) + MAX_VALUE - 60
+        self.nodes[0].walletpassphrase(passphrase2, MAX_VALUE - 60)
         # give buffer for walletpassphrase, since it iterates over all crypted keys
-        expected_time_with_buffer = time.time() + MAX_VALUE - 600
+        expected_time_with_buffer = time.time() + MAX_VALUE - 60
         actual_time = self.nodes[0].getwalletinfo()['unlocked_until']
         assert_greater_than_or_equal(actual_time, expected_time)
         assert_greater_than(expected_time_with_buffer, actual_time)

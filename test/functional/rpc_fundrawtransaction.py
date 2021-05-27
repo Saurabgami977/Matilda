@@ -563,7 +563,7 @@ class RawTransactionsTest(MatildaTestFramework):
         fundedTx = self.nodes[1].fundrawtransaction(rawtx)
 
         # Now we need to unlock.
-        self.nodes[1].walletpassphrase("test", 600)
+        self.nodes[1].walletpassphrase("test", 60)
         signedTx = self.nodes[1].signrawtransactionwithwallet(fundedTx['hex'])
         self.nodes[1].sendrawtransaction(signedTx['hex'])
         self.nodes[1].generate(1)

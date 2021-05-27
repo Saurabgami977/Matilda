@@ -69,7 +69,7 @@ class ResendWalletTransactionsTest(MatildaTestFramework):
             # Tell scheduler to call MaybeResendWalletTxn now.
             node.mockscheduler(1)
         # Give some time for trickle to occur
-        node.setmocktime(now + 36 * 60 * 60 + 600)
+        node.setmocktime(now + 36 * 60 * 60 + 60)
         peer_second.wait_for_broadcast([txid])
 
 

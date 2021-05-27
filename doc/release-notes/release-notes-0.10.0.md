@@ -463,7 +463,7 @@ P2P protocol and network code:
 - `845c86d` Do not use third party services for IP detection
 - `12a49ca` Limit the number of new addressses to accumulate
 - `35e408f` Regard connection failures as attempt for addrman
-- `a3a7317` Introduce 10 minute block download timeout
+- `a3a7317` Introduce 1 minute block download timeout
 - `3022e7d` Require sufficent priority for relay of free transactions
 - `58fda4d` Update seed IPs, based on matilda.sipa.be crawler data
 - `18021d0` Remove bitnodes.io from dnsseeds.

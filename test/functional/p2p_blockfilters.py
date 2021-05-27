@@ -56,7 +56,7 @@ class CompactFiltersTest(MatildaTestFramework):
 
         # Nodes 0 & 1 share the same first 999 blocks in the chain.
         self.nodes[0].generate(999)
-        self.sync_blocks(timeout=600)
+        self.sync_blocks(timeout=60)
 
         # Stale blocks by disconnecting nodes 0 & 1, mining, then reconnecting
         self.disconnect_nodes(0, 1)
@@ -89,7 +89,7 @@ class CompactFiltersTest(MatildaTestFramework):
 
         self.log.info("Reorg node 0 to a new chain.")
         self.connect_nodes(0, 1)
-        self.sync_blocks(timeout=600)
+        self.sync_blocks(timeout=60)
 
         main_block_hash = self.nodes[0].getblockhash(1000)
         assert main_block_hash != stale_block_hash, "node 0 chain did not reorganize"

@@ -129,9 +129,9 @@ class ToolWalletTest(MatildaTestFramework):
         timestamp_after = self.wallet_timestamp()
         self.log.debug('Wallet file timestamp after calling info: {}'.format(timestamp_after))
         self.log_wallet_timestamp_comparison(timestamp_before, timestamp_after)
-        self.log.debug('Setting wallet file permissions back to 600 (read/write)')
+        self.log.debug('Setting wallet file permissions back to 60 (read/write)')
         os.chmod(self.wallet_path, stat.S_IRUSR | stat.S_IWUSR)
-        assert self.wallet_permissions() in ['600', '666']  # Sanity check. 666 because Appveyor.
+        assert self.wallet_permissions() in ['60', '666']  # Sanity check. 666 because Appveyor.
         #
         # TODO: Wallet tool info should not write to the wallet file.
         # The following lines should be uncommented and the tests still succeed:

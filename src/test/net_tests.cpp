@@ -759,7 +759,7 @@ BOOST_AUTO_TEST_CASE(PoissonNextSend)
     g_mock_deterministic_tests = true;
 
     int64_t now = 5000;
-    int average_interval_seconds = 600;
+    int average_interval_seconds = 60;
 
     auto poisson = ::PoissonNextSend(now, average_interval_seconds);
     std::chrono::microseconds poisson_chrono = ::PoissonNextSend(std::chrono::microseconds{now}, std::chrono::seconds{average_interval_seconds});

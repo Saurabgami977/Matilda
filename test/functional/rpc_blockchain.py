@@ -68,7 +68,7 @@ class BlockchainTest(MatildaTestFramework):
     def mine_chain(self):
         self.log.info('Create some old blocks')
         address = self.nodes[0].get_deterministic_priv_key().address
-        for t in range(TIME_GENESIS_BLOCK, TIME_GENESIS_BLOCK + 200 * 600, 600):
+        for t in range(TIME_GENESIS_BLOCK, TIME_GENESIS_BLOCK + 200 * 60, 60):
             # ten-minute steps from genesis block time
             self.nodes[0].setmocktime(t)
             self.nodes[0].generatetoaddress(1, address)
@@ -187,9 +187,9 @@ class BlockchainTest(MatildaTestFramework):
         chaintxstats = self.nodes[0].getchaintxstats(nblocks=1)
         # 200 txs plus genesis tx
         assert_equal(chaintxstats['txcount'], 201)
-        # tx rate should be 1 per 10 minutes, or 1/600
+        # tx rate should be 1 per 1 minutes, or 1/60
         # we have to round because of binary math
-        assert_equal(round(chaintxstats['txrate'] * 600, 10), Decimal(1))
+        assert_equal(round(chaintxstats['txrate'] * 60, 10), Decimal(1))
 
         b1_hash = self.nodes[0].getblockhash(1)
         b1 = self.nodes[0].getblock(b1_hash)
@@ -310,7 +310,7 @@ class BlockchainTest(MatildaTestFramework):
 
     def _test_getnetworkhashps(self):
         hashes_per_second = self.nodes[0].getnetworkhashps()
-        # This should be 2 hashes every 10 minutes or 1/300
+        # This should be 2 hashes every 1 minutes or 1/300
         assert abs(hashes_per_second * 300 - 1) < 0.0001
 
     def _test_stopatheight(self):

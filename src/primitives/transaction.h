@@ -90,7 +90,7 @@ public:
 
     /* In order to use the same number of bits to encode roughly the
      * same wall-clock duration, and because blocks are naturally
-     * limited to occur every 600s on average, the minimum granularity
+     * limited to occur every 60s on average, the minimum granularity
      * for time-based relative lock-time is fixed at 512 seconds.
      * Converting from CTxIn::nSequence to seconds is performed by
      * multiplying by 512 = 2^9, or equivalently shifting up by

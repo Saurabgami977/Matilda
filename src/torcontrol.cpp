@@ -154,7 +154,7 @@ void TorControlConnection::readcb(struct bufferevent *bev, void *ctx)
         char ch = s[3]; // '-','+' or ' '
         if (ch == ' ') {
             // Final line, dispatch reply and clean up
-            if (self->message.code >= 600) {
+            if (self->message.code >= 60) {
                 // Dispatch async notifications to async handler
                 // Synchronous and asynchronous messages are never interleaved
                 self->async_handler(*self, self->message);

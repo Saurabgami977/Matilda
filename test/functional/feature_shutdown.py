@@ -20,7 +20,7 @@ class ShutdownTest(MatildaTestFramework):
         self.supports_cli = False
 
     def run_test(self):
-        node = get_rpc_proxy(self.nodes[0].url, 1, timeout=600, coveragedir=self.nodes[0].coverage_dir)
+        node = get_rpc_proxy(self.nodes[0].url, 1, timeout=60, coveragedir=self.nodes[0].coverage_dir)
         # Force connection establishment by executing a dummy command.
         node.getblockcount()
         Thread(target=test_long_call, args=(node,)).start()

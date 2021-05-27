@@ -163,13 +163,13 @@ class BIP68_112_113Test(MatildaTestFramework):
         for _ in range(number):
             block = self.create_test_block([])
             test_blocks.append(block)
-            self.last_block_time += 600
+            self.last_block_time += 60
             self.tip = block.sha256
             self.tipheight += 1
         return test_blocks
 
     def create_test_block(self, txs):
-        block = create_block(self.tip, create_coinbase(self.tipheight + 1), self.last_block_time + 600)
+        block = create_block(self.tip, create_coinbase(self.tipheight + 1), self.last_block_time + 60)
         block.nVersion = 4
         block.vtx.extend(txs)
         block.hashMerkleRoot = block.calc_merkle_root()
@@ -187,7 +187,7 @@ class BIP68_112_113Test(MatildaTestFramework):
         self.helper_peer = self.nodes[0].add_p2p_connection(P2PDataStore())
 
         self.log.info("Generate blocks in the past for coinbase outputs.")
-        long_past_time = int(time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minutes apart without worrying about getting into the future
+        long_past_time = int(time.time()) - 60 * 1000  # enough to build up to 1000 blocks 1 minutes apart without worrying about getting into the future
         self.nodes[0].setmocktime(long_past_time - 100)  # enough so that the generated blocks will still all be before long_past_time
         self.coinbase_blocks = self.nodes[0].generate(COINBASE_BLOCK_COUNT)  # blocks generated for inputs
         self.nodes[0].setmocktime(0)  # set time back to present so yielded blocks aren't in the future as we advance last_block_time
@@ -204,7 +204,7 @@ class BIP68_112_113Test(MatildaTestFramework):
 
         # Inputs at height = 431
         #
-        # Put inputs for all tests in the chain at height 431 (tip now = 430) (time increases by 600s per block)
+        # Put inputs for all tests in the chain at height 431 (tip now = 430) (time increases by 60s per block)
         # Note we reuse inputs for v1 and v2 txs so must test these separately
         # 16 normal inputs
         bip68inputs = []
@@ -235,12 +235,12 @@ class BIP68_112_113Test(MatildaTestFramework):
         # 1 normal input
         bip113input = send_generic_input_tx(self.nodes[0], self.coinbase_blocks, self.nodeaddress)
 
-        self.nodes[0].setmocktime(self.last_block_time + 600)
+        self.nodes[0].setmocktime(self.last_block_time + 60)
         inputblockhash = self.nodes[0].generate(1)[0]  # 1 block generated for inputs to be in chain at height 431
         self.nodes[0].setmocktime(0)
         self.tip = int(inputblockhash, 16)
         self.tipheight += 1
-        self.last_block_time += 600
+        self.last_block_time += 60
         assert_equal(len(self.nodes[0].getblock(inputblockhash, True)["tx"]), TESTING_TX_COUNT + 1)
 
         # 2 more version 4 blocks
@@ -291,7 +291,7 @@ class BIP68_112_113Test(MatildaTestFramework):
 
         success_txs = []
         # BIP113 tx, -1 CSV tx and empty stack CSV tx should succeed
-        bip113tx_v1.nLockTime = self.last_block_time - 600 * 5  # = MTP of prior block (not <) but < time put on current block
+        bip113tx_v1.nLockTime = self.last_block_time - 60 * 5  # = MTP of prior block (not <) but < time put on current block
         bip113signed1 = sign_transaction(self.nodes[0], bip113tx_v1)
         success_txs.append(bip113signed1)
         success_txs.append(bip112tx_special_v1)
@@ -311,7 +311,7 @@ class BIP68_112_113Test(MatildaTestFramework):
 
         success_txs = []
         # BIP113 tx, -1 CSV tx and empty stack CSV tx should succeed
-        bip113tx_v2.nLockTime = self.last_block_time - 600 * 5  # = MTP of prior block (not <) but < time put on current block
+        bip113tx_v2.nLockTime = self.last_block_time - 60 * 5  # = MTP of prior block (not <) but < time put on current block
         bip113signed2 = sign_transaction(self.nodes[0], bip113tx_v2)
         success_txs.append(bip113signed2)
         success_txs.append(bip112tx_special_v2)
@@ -337,16 +337,16 @@ class BIP68_112_113Test(MatildaTestFramework):
 
         self.log.info("BIP 113 tests")
         # BIP 113 tests should now fail regardless of version number if nLockTime isn't satisfied by new rules
-        bip113tx_v1.nLockTime = self.last_block_time - 600 * 5  # = MTP of prior block (not <) but < time put on current block
+        bip113tx_v1.nLockTime = self.last_block_time - 60 * 5  # = MTP of prior block (not <) but < time put on current block
         bip113signed1 = sign_transaction(self.nodes[0], bip113tx_v1)
-        bip113tx_v2.nLockTime = self.last_block_time - 600 * 5  # = MTP of prior block (not <) but < time put on current block
+        bip113tx_v2.nLockTime = self.last_block_time - 60 * 5  # = MTP of prior block (not <) but < time put on current block
         bip113signed2 = sign_transaction(self.nodes[0], bip113tx_v2)
         for bip113tx in [bip113signed1, bip113signed2]:
             self.send_blocks([self.create_test_block([bip113tx])], success=False, reject_reason='bad-txns-nonfinal')
         # BIP 113 tests should now pass if the locktime is < MTP
-        bip113tx_v1.nLockTime = self.last_block_time - 600 * 5 - 1  # < MTP of prior block
+        bip113tx_v1.nLockTime = self.last_block_time - 60 * 5 - 1  # < MTP of prior block
         bip113signed1 = sign_transaction(self.nodes[0], bip113tx_v1)
-        bip113tx_v2.nLockTime = self.last_block_time - 600 * 5 - 1  # < MTP of prior block
+        bip113tx_v2.nLockTime = self.last_block_time - 60 * 5 - 1  # < MTP of prior block
         bip113signed2 = sign_transaction(self.nodes[0], bip113tx_v2)
         for bip113tx in [bip113signed1, bip113signed2]:
             self.send_blocks([self.create_test_block([bip113tx])])
@@ -371,7 +371,7 @@ class BIP68_112_113Test(MatildaTestFramework):
         self.send_blocks([self.create_test_block(bip68success_txs)])
         self.nodes[0].invalidateblock(self.nodes[0].getbestblockhash())
 
-        # All txs without flag fail as we are at delta height = 8 < 10 and delta time = 8 * 600 < 10 * 512
+        # All txs without flag fail as we are at delta height = 8 < 10 and delta time = 8 * 60 < 10 * 512
         bip68timetxs = [tx['tx'] for tx in bip68txs_v2 if not tx['sdf'] and tx['stf']]
         for tx in bip68timetxs:
             self.send_blocks([self.create_test_block([tx])], success=False, reject_reason='bad-txns-nonfinal')
@@ -384,7 +384,7 @@ class BIP68_112_113Test(MatildaTestFramework):
         test_blocks = self.generate_blocks(1)
         self.send_blocks(test_blocks)
 
-        # Height txs should fail and time txs should now pass 9 * 600 > 10 * 512
+        # Height txs should fail and time txs should now pass 9 * 60 > 10 * 512
         bip68success_txs.extend(bip68timetxs)
         self.send_blocks([self.create_test_block(bip68success_txs)])
         self.nodes[0].invalidateblock(self.nodes[0].getbestblockhash())

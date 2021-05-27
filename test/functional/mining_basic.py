@@ -51,7 +51,7 @@ class MiningTest(MatildaTestFramework):
 
     def mine_chain(self):
         self.log.info('Create some old blocks')
-        for t in range(TIME_GENESIS_BLOCK, TIME_GENESIS_BLOCK + 200 * 600, 600):
+        for t in range(TIME_GENESIS_BLOCK, TIME_GENESIS_BLOCK + 200 * 60, 60):
             self.nodes[0].setmocktime(t)
             self.nodes[0].generate(1)
         mining_info = self.nodes[0].getmininginfo()

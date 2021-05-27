@@ -277,7 +277,7 @@ class MultiWalletTest(MatildaTestFramework):
         self.log.info("Concurrent wallet loading")
         threads = []
         for _ in range(3):
-            n = node.cli if self.options.usecli else get_rpc_proxy(node.url, 1, timeout=600, coveragedir=node.coverage_dir)
+            n = node.cli if self.options.usecli else get_rpc_proxy(node.url, 1, timeout=60, coveragedir=node.coverage_dir)
             t = Thread(target=test_load_unload, args=(n, wallet_names[2], ))
             t.start()
             threads.append(t)

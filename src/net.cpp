@@ -2042,7 +2042,7 @@ void CConnman::ThreadOpenConnections(const std::vector<std::string> connect)
                 continue;
 
             // only consider very recently tried nodes after 30 failed attempts
-            if (nANow - addr.nLastTry < 600 && nTries < 30)
+            if (nANow - addr.nLastTry < 60 && nTries < 30)
                 continue;
 
             // for non-feelers, require all the services we'll want,
@@ -2904,7 +2904,7 @@ bool CConnman::OutboundTargetReached(bool historicalBlockServingLimit)
     {
         // keep a large enough buffer to at least relay each block once
         uint64_t timeLeftInCycle = GetMaxOutboundTimeLeftInCycle();
-        uint64_t buffer = timeLeftInCycle / 600 * MAX_BLOCK_SERIALIZED_SIZE;
+        uint64_t buffer = timeLeftInCycle / 60 * MAX_BLOCK_SERIALIZED_SIZE;
         if (buffer >= nMaxOutboundLimit || nMaxOutboundTotalBytesSentInCycle >= nMaxOutboundLimit - buffer)
             return true;
     }

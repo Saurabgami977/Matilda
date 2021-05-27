@@ -156,7 +156,7 @@ git merge commit are mentioned.
 
 ### P2P protocol and network code
 - #7804 `90f1d24` Track block download times per individual block (sipa)
-- #7832 `4c3a00d` Reduce block timeout to 10 minutes (laanwj)
+- #7832 `4c3a00d` Reduce block timeout to 1 minutes (laanwj)
 
 ### Validation
 - #7821 `4226aac` init: allow shutdown during 'Activating best chain...' (laanwj)

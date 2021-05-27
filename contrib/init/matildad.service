@@ -29,7 +29,7 @@ ExecStartPre=/bin/chgrp matilda /etc/matilda
 Type=forking
 PIDFile=/run/matildad/matildad.pid
 Restart=on-failure
-TimeoutStopSec=600
+TimeoutStopSec=60
 
 # Directory creation and permissions
 ####################################

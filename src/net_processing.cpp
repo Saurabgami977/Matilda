@@ -53,7 +53,7 @@ static constexpr int32_t MAX_OUTBOUND_PEERS_TO_PROTECT_FROM_DISCONNECT = 4;
 /** Timeout for (unprotected) outbound peers to sync to our chainwork, in seconds */
 static constexpr int64_t CHAIN_SYNC_TIMEOUT = 20 * 60; // 20 minutes
 /** How frequently to check for stale tips, in seconds */
-static constexpr int64_t STALE_CHECK_INTERVAL = 10 * 60; // 10 minutes
+static constexpr int64_t STALE_CHECK_INTERVAL = 10 * 60; // 1 minutes
 /** How frequently to check for extra outbound peers and disconnect, in seconds */
 static constexpr int64_t EXTRA_PEER_CHECK_INTERVAL = 45;
 /** Minimum time an outbound-peer-eviction candidate must be connected for, in order to evict, in seconds */
@@ -107,7 +107,7 @@ static const int MAX_BLOCKTXN_DEPTH = 10;
  *  degree of disordering of blocks on disk (which make reindexing and pruning harder). We'll probably
  *  want to make this a per-peer adaptive value at some point. */
 static const unsigned int BLOCK_DOWNLOAD_WINDOW = 1024;
-/** Block download timeout base, expressed in millionths of the block interval (i.e. 10 min) */
+/** Block download timeout base, expressed in millionths of the block interval (i.e. 1 min) */
 static const int64_t BLOCK_DOWNLOAD_TIMEOUT_BASE = 1000000;
 /** Additional block download timeout per parallel downloading peer (i.e. 5 min) */
 static const int64_t BLOCK_DOWNLOAD_TIMEOUT_PER_PEER = 500000;
